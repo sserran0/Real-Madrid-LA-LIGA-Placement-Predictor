@@ -1,0 +1,12 @@
+__pycache__/
+
+*.__pycache__
+
+.venv/
+
+.env
+
+data/raw/
+data/processed/
+
+.DS_Store
