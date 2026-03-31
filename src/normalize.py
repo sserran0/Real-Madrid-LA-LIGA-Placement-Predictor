@@ -1,13 +1,12 @@
 import json 
 import csv 
 from pathlib import Path
-rawData = Path("data/raw")
-processedData = Path("data/processed")
+from config import RAW_DIR, PROCESSED_DIR, DEF_SEASON
 
-def main(season: int = 2025):
-    inPath = rawData / f"matches_{season}.json"
-    outPath = processedData / f"matches_{season}.csv"
-    processedData.mkdir(parents = True, exist_ok = True)
+def main(season: int = DEF_SEASON):
+    inPath = RAW_DIR / f"matches_{season}.json"
+    outPath = PROCESSED_DIR / f"matches_{season}.csv"
+    PROCESSED_DIR.mkdir(parents = True, exist_ok = True)
     data = json.loads(inPath.read_text(encoding = "utf-8"))
    
     with outPath.open("w", newline = "", encoding = "utf-8") as f:
@@ -16,7 +15,13 @@ def main(season: int = 2025):
 
         for m in data.get("matches", []):
             full_time = (m.get("score") or {}).get("fullTime") or {}
-            writer.writerow([m["utcDate"], m["homeTeam"]["name"], m["awayTeam"]["name"],m["score"]["fullTime"]["home"],m["score"]["fullTime"]["away"],])
+            writer.writerow([
+                m["utcDate"],
+                m["homeTeam"]["name"], 
+                m["awayTeam"]["name"],
+                full_time.get("home"),
+                full_time.get("away"),])
+        
 
     print(f"Wrote CSV to {outPath}")
 

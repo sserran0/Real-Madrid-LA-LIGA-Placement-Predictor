@@ -2,11 +2,11 @@ from pathlib import Path
 
 #API
 API_URL = "https://api.football-data.org/v4"
-COMPETITION: "PD"
+COMPETITION = "PD"
 
 
 #Team and Season
-DEF_SEASON: 2025
+DEF_SEASON = 2025
 TEAM = "Real Madrid CF"
 
 #File Path

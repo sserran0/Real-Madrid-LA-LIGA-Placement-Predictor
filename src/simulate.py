@@ -12,8 +12,8 @@ def load_matches(season: int = DEF_SEASON):
     with path.open(encoding = "utf-8") as f:
 
         for row in csv.DictReader(f):
-            if row["home-goals"] and row["away_goals"]:
-                row["home_goals]"] = int(row["home_goals"])
+            if row["home_goals"] and row["away_goals"]:
+                row["home_goals"] = int(row["home_goals"])
                 row["away_goals"] = int(row["away_goals"])
                 played.append(row)
 
@@ -41,8 +41,8 @@ def build_team_stats(played):
         stats[home]["conceded"] += ag
         stats[home]["games"] += 1
 
-        stats[away]["scored"] +=hg
-        stats[away]["conceded"] += ag
+        stats[away]["scored"] +=ag
+        stats[away]["conceded"] += hg
         stats[away]["games"] += 1
     
     for team in stats:
@@ -84,38 +84,38 @@ def build_table(played, sim_remaining):
 
         if home not in points:
             points[home] = 0
-            if away not in points:
-                points[away] = 0
+        if away not in points:
+            points[away] = 0
         #Points Distribution based on results
-                if hg > ag:
-                    points[home] += POINTS_WIN
-                    points[away] += POINTS_LOSS
-                elif ag > hg:
-                    points[home] += POINTS_LOSS
-                    points[away] += POINTS_WIN
-                else:
-                    points[home] += POINTS_DRAW
-                    points[away] += POINTS_DRAW
+        if hg > ag:
+            points[home] += POINTS_WIN
+            points[away] += POINTS_LOSS
+        elif ag > hg:
+            points[home] += POINTS_LOSS
+            points[away] += POINTS_WIN
+        else:
+            points[home] += POINTS_DRAW
+            points[away] += POINTS_DRAW
 
         #This sorts teams in descending orders based on points        
-        table = sorted(points.items(), key = lambda x: x[1], reverse = True)
-        return table   
+    table = sorted(points.items(), key = lambda x: x[1], reverse = True)
+    return table   
 
-    def run_once(season: int = DEF_SEASON):
-        played, remaining = load_matches(season)
-        stats = build_team_stats(played)
+def run_once(season: int = DEF_SEASON):
+    played, remaining = load_matches(season)
+    stats = build_team_stats(played)
 
-        sim = []
+    sim = []
 
-        for m in remaining:
-            hg, ag = simulate_match(m["home"], m["away"], stats)
-            sim.append({
-                "home": m["home"],
-                "away": m["away"],
-                "home_goals": hg,
-                "away_goals": ag
-            })  
+    for m in remaining:
+        hg, ag = simulate_match(m["home"], m["away"], stats)
+        sim.append({
+            "home": m["home"],
+            "away": m["away"],
+            "home_goals": hg,
+            "away_goals": ag
+        })  
 
-            return build_table(played, sim)        
+    return build_table(played, sim)        
 
 
