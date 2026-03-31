@@ -23,7 +23,7 @@ def parse_args():
 
     return parser.parse_args()
 
-
+#Prints out results
 def display_results(results):
     print("\n" + "=" * 50)
     print(f" {results['team']} Season Prediction")
@@ -32,14 +32,15 @@ def display_results(results):
     print(f" Avg Finishing Points: {results['avg_points']:.1f}")
     print(f" Points range:: {results['min_points']} - {results['max_points']}")
     print(f" Avg Finishing Position: {results['avg_position']:,}")
-    print(f" Title Probability:       {results['title_prob']:.1f}%")
-    print(f" Top 4 Probability:       {results['top_4_prob']:.1f}%")
+    print(f" Title Probability:      {results['title_prob']:.1f}%")
+    print(f" Top 4 Probability:      {results['top_4_prob']:.1f}%")
     print(f" Relegation Probability: {results['relegation_prob']:.1f}%")
     print("=" * 50)
 
 def main():
     args = parse_args()
 
+#API data fetch based on preference
     if not args.skip_fetch:
         print(f"Fetching match data for {args.season} season ...")
         data = match_fetch(args.season)
