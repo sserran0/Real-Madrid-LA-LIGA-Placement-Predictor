@@ -3,6 +3,8 @@ import requests
 import json
 from pathlib import Path
 from dotenv import load_dotenv
+from config import API_URL, COMPETITION, RAW_DIR, DEF_SEASON
+
 load_dotenv()
 
 api_url = 'https://api.football-data.org/v4'
@@ -16,6 +18,7 @@ def cache_raw_json(data: dict, filename: str) -> Path:
     path.write_text(json.dumps(data, indent = 2),encoding = "utf-8")
     return path
 #function to cache raw json data fetched from api
+
 def match_fetch(season: int) -> dict:
     url = f"{api_url}/competitions/{competition}/matches"
     apiKey = os.getenv("footballAPI")
@@ -27,12 +30,11 @@ def match_fetch(season: int) -> dict:
     print("Status:", response.status_code)
     response.raise_for_status()
     return response.json()
+
 #function that fetches matches from api
-    
 def main():
-    season = 2025
-    data = match_fetch(season)
-    save = cache_raw_json(data, f"matches_{season}.json")
+    data = match_fetch(DEF_SEASON)
+    cache_raw_json(data, f"matches_{DEF_SEASON}.json")
     
 
 
