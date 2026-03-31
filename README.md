@@ -25,9 +25,9 @@ The program follows a four-stage pipeline:
 ### The Math: Poisson Distribution
 The core of the simulation utilizes the Poisson distribution to model goal-scoring. Poisson was the most natural fit for football I found because goals are:
 
-Rare: teams typically score 0–4 goals, not dozens
-Independent: one goal doesn't mechanically cause another
-Defined by an average rate: each team has a measurable scoring rate per game
+ - Rare: teams typically score 0–4 goals, not dozens
+ - Independent: one goal doesn't mechanically cause another
+ - Defined by an average rate: each team has a measurable scoring rate per game
 
 For each simulated match, the model computes expected goals by averaging the attacking team's scoring rate with the opposing team's concession rate:<br>
 ``
