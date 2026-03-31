@@ -18,7 +18,7 @@ def main(season: int = 2025):
             full_time = (m.get("score") or {}).get("fullTime") or {}
             writer.writerow([m["utcDate"], m["homeTeam"]["name"], m["awayTeam"]["name"],m["score"]["fullTime"]["home"],m["score"]["fullTime"]["away"],])
 
-    print(f"Wrote CSV to{outPath}")
+    print(f"Wrote CSV to {outPath}")
 
 if __name__ == "__main__":
     main()
